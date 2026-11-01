@@ -361,18 +361,23 @@ document.querySelector('#desktopCheckout').addEventListener('click',openCart);
 document.querySelector('#cartClose').addEventListener('click',closeCart);cartBackdrop.addEventListener('click',closeCart);
 document.querySelector('#browseMenu').addEventListener('click',()=>{closeCart();document.querySelector('#zamow').scrollIntoView({behavior:'smooth'})});
 checkoutForm.querySelectorAll('[name="fulfilment"]').forEach(input=>input.addEventListener('change',()=>{const delivery=input.value==='Dostawa'&&input.checked;const field=checkoutForm.querySelector('.address-field');field.hidden=!delivery;field.querySelector('input').required=delivery}));
-document.querySelector('#sendOrder').addEventListener('click',()=>{
+const sendOrder=document.querySelector('#sendOrder');
+sendOrder.addEventListener('click',event=>{
   const error=document.querySelector('#checkoutError'); error.hidden=true;
-  if(!checkoutForm.reportValidity()){error.textContent='Uzupełnij wymagane dane kontaktowe.';error.hidden=false;return}
+  if(!checkoutForm.reportValidity()){event.preventDefault();error.textContent='Uzupełnij wymagane dane kontaktowe.';error.hidden=false;return}
   const data=new FormData(checkoutForm); const entries=Object.entries(cart).filter(([,qty])=>qty>0);
-  if(!entries.length){error.textContent='Koszyk jest pusty. Dodaj danie przed wysłaniem zamówienia.';error.hidden=false;return}
+  if(!entries.length){event.preventDefault();error.textContent='Koszyk jest pusty. Dodaj danie przed wysłaniem zamówienia.';error.hidden=false;return}
   const total=entries.reduce((sum,[id,qty])=>sum+resolveCartItem(id).price*qty,0);
   const lines=entries.map(([id,qty],index)=>{const item=resolveCartItem(id);return `${index+1}. ${item.name} × ${qty} - ${money(item.price*qty)}`});
   const message=['Dzień dobry, chcę złożyć zamówienie w Hà Nội Quán.','','ZAMÓWIENIE:',...lines,'',`RAZEM: ${money(total)}`,'',`Sposób odbioru: ${data.get('fulfilment')}`,`Imię: ${data.get('customerName')}`,`Telefon: ${data.get('customerPhone')}`];
   if(data.get('address'))message.push(`Adres: ${data.get('address')}`); if(data.get('notes'))message.push(`Uwagi: ${data.get('notes')}`);
   message.push('','Proszę o potwierdzenie ceny i czasu realizacji.');
-  const whatsappUrl=`https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message.join('\n'))}`;
-  window.location.assign(whatsappUrl);
+  const whatsappUrl=new URL('https://api.whatsapp.com/send/');
+  whatsappUrl.searchParams.set('phone',SITE_CONFIG.whatsappNumber);
+  whatsappUrl.searchParams.set('text',message.join('\n'));
+  whatsappUrl.searchParams.set('type','phone_number');
+  whatsappUrl.searchParams.set('app_absent','0');
+  sendOrder.href=whatsappUrl.toString();
 });
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape'){

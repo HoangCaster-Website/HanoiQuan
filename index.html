@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
   <title>Hà Nội Quán | Restauracja wietnamsko-tajska Cieszyn</title>
   <meta name="description" content="Hà Nội Quán w Cieszynie. Restauracja wietnamsko-tajska z kuchnią azjatycką, Pad Thai, phở i sushi. Sprawdź menu, godziny otwarcia i zamów online.">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -198,7 +198,7 @@
     <div class="cart-body"><div class="cart-empty" id="cartEmpty"><strong>Twój koszyk jest pusty</strong><p>Wybierz dania, aby rozpocząć.</p><button class="btn" id="browseMenu" type="button">Zobacz dania</button></div><div class="cart-items" id="cartItems"></div>
       <form class="checkout-form" id="checkoutForm" hidden novalidate><fieldset><legend>Sposób odbioru</legend><label class="radio-row"><input type="radio" name="fulfilment" value="Odbiór osobisty" checked><span>Odbiór osobisty</span></label><label class="radio-row"><input type="radio" name="fulfilment" value="Dostawa"><span>Dostawa</span></label></fieldset><div class="form-grid"><label>Imię i nazwisko<input name="customerName" autocomplete="name" required></label><label>Telefon<input name="customerPhone" type="tel" autocomplete="tel" required></label></div><label class="address-field" hidden>Adres dostawy<input name="address" autocomplete="street-address"></label><label>Uwagi<textarea name="notes" rows="2" placeholder="Np. bez ostrego sosu"></textarea></label><p class="form-error" id="checkoutError" role="alert" hidden></p></form>
     </div>
-    <div class="cart-footer" id="cartFooter" hidden><div class="cart-total"><span>Razem</span><strong id="cartTotal">0,00 zł</strong></div><p>Zamówienie trafi na WhatsApp: +48 579 344 577. Po otwarciu WhatsApp naciśnij „Wyślij”.</p><button class="btn whatsapp-checkout" id="sendOrder" type="button">Przejdź do WhatsApp</button></div>
+    <div class="cart-footer" id="cartFooter" hidden><div class="cart-total"><span>Razem</span><strong id="cartTotal">0,00 zł</strong></div><a class="btn whatsapp-checkout" id="sendOrder" href="https://api.whatsapp.com/send/?phone=48579344577&amp;type=phone_number&amp;app_absent=0">Przejdź do WhatsApp</a><p>Zamówienie trafi na WhatsApp: +48 579 344 577. Po otwarciu WhatsApp naciśnij „Wyślij”.</p></div>
   </aside>
   <div class="cart-toast" id="cartToast" role="status" aria-live="polite" hidden>Dodano do koszyka</div>
   <script src="js/main.js" defer></script>
