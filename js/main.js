@@ -372,11 +372,8 @@ sendOrder.addEventListener('click',event=>{
   const message=['Dzień dobry, chcę złożyć zamówienie w Hà Nội Quán.','','ZAMÓWIENIE:',...lines,'',`RAZEM: ${money(total)}`,'',`Sposób odbioru: ${data.get('fulfilment')}`,`Imię: ${data.get('customerName')}`,`Telefon: ${data.get('customerPhone')}`];
   if(data.get('address'))message.push(`Adres: ${data.get('address')}`); if(data.get('notes'))message.push(`Uwagi: ${data.get('notes')}`);
   message.push('','Proszę o potwierdzenie ceny i czasu realizacji.');
-  const whatsappUrl=new URL('https://api.whatsapp.com/send/');
-  whatsappUrl.searchParams.set('phone',SITE_CONFIG.whatsappNumber);
+  const whatsappUrl=new URL(`https://wa.me/${SITE_CONFIG.whatsappNumber}`);
   whatsappUrl.searchParams.set('text',message.join('\n'));
-  whatsappUrl.searchParams.set('type','phone_number');
-  whatsappUrl.searchParams.set('app_absent','0');
   sendOrder.href=whatsappUrl.toString();
 });
 document.addEventListener('keydown',event=>{
