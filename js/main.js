@@ -7,6 +7,9 @@ const SITE_CONFIG = {
 };
 
 document.documentElement.classList.add('js-ready');
+const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+if(isIOSDevice&&!isStandaloneApp)document.documentElement.classList.add('ios-browser');
 
 document.querySelectorAll('#whatsappReservation,#whatsappOrder,#whatsappFooter,#floatingWhatsapp,#mobileWhatsapp').forEach(link => {
   link.href = SITE_CONFIG.whatsapp;
